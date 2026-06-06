@@ -1,0 +1,41 @@
+/* Leaflet 本体CSS(@import は他の規則より前に置く必要がある) */
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: ui-sans-serif, system-ui, "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+    "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f4f6f9;
+  color: #1f2937;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 地図上の人流バブルのラベル */
+.flow-label {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  font-weight: 700;
+  color: #0f3a59;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 3px #fff,
+    0 0 3px #fff;
+  pointer-events: none;
+}
+
+/* Leaflet のデフォルトマーカー画像欠落対策(今回はcircleMarkerのみ使用) */
+.leaflet-container {
+  background: #eaf3f7;
+  font: inherit;
+}
