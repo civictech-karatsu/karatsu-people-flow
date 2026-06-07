@@ -57,8 +57,8 @@ export default function AreaDetail({ data, areaId, onClose }: Props) {
   const color = areaColor(areaId);
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3">
+    <div className="flex flex-col lg:h-full">
+      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-4 py-3">
         <div className="flex items-center gap-2">
           <span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: color }} />
           <h2 className="font-bold text-karatsu-800">{area.name}</h2>
@@ -72,7 +72,7 @@ export default function AreaDetail({ data, areaId, onClose }: Props) {
         </button>
       </div>
 
-      <div className="flex-1 space-y-6 overflow-y-auto p-4">
+      <div className="space-y-6 p-4 lg:flex-1 lg:overflow-y-auto">
         {/* 月次推移 */}
         <section>
           <h3 className="mb-1 text-sm font-semibold text-gray-700">月次 滞在人口の推移</h3>

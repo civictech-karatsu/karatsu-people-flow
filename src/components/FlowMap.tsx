@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
 import {
   CircleMarker,
@@ -77,6 +77,21 @@ function declutter(map: L.Map, areas: Area[], zoom: number): Record<string, Plac
   return out;
 }
 
+// 全エリアが画面に収まるよう初回マウント時に自動フィット(画面幅に応じてズーム最適化)
+function FitBounds({ areas }: { areas: Area[] }) {
+  const map = useMap();
+  const done = useRef(false);
+  useEffect(() => {
+    if (done.current || areas.length === 0) return;
+    done.current = true;
+    map.invalidateSize();
+    const bounds = L.latLngBounds(areas.map((a) => [a.lat, a.lng] as [number, number]));
+    const small = map.getSize().x < 640;
+    map.fitBounds(bounds, { padding: small ? [28, 28] : [60, 50], maxZoom: 13 });
+  }, [map, areas]);
+  return null;
+}
+
 function AreaMarkers({ data, maxValue, metric, selectedAreaId, onSelect }: Props) {
   const map = useMap();
   const [zoom, setZoom] = useState(map.getZoom());
@@ -84,6 +99,9 @@ function AreaMarkers({ data, maxValue, metric, selectedAreaId, onSelect }: Props
 
   const areas = useMemo(() => data.map((d) => d.area), [data]);
   const placed = useMemo(() => declutter(map, areas, zoom), [map, areas, zoom]);
+
+  // 画面幅に応じて円の最大半径を調整(モバイルで大きすぎないように)
+  const maxRadius = Math.max(20, Math.min(40, map.getSize().x / 11));
 
   // 大きい円から先に描画し、小さい円を上に(クリック可能に)
   const ordered = useMemo(
@@ -117,7 +135,7 @@ function AreaMarkers({ data, maxValue, metric, selectedAreaId, onSelect }: Props
           <CircleMarker
             key={area.id}
             center={[pos.lat, pos.lng]}
-            radius={radiusFor(v, maxValue, 40)}
+            radius={radiusFor(v, maxValue, maxRadius)}
             pathOptions={{
               color: selected ? "#0f3a59" : "#ffffff",
               weight: selected ? 3 : 1.5,
@@ -142,13 +160,13 @@ function AreaMarkers({ data, maxValue, metric, selectedAreaId, onSelect }: Props
 }
 
 export default function FlowMap(props: Props) {
+  const areas = props.data.map((d) => d.area);
   return (
     <MapContainer
       center={[33.492, 129.952]}
       zoom={11}
       scrollWheelZoom
       className="h-full w-full"
-      style={{ minHeight: "420px" }}
     >
       {/* 国土地理院 淡色地図タイル(オープン・キー不要) */}
       <TileLayer
@@ -156,6 +174,7 @@ export default function FlowMap(props: Props) {
         attribution='&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a>'
         maxZoom={18}
       />
+      <FitBounds areas={areas} />
       <AreaMarkers {...props} />
     </MapContainer>
   );

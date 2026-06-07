@@ -89,7 +89,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen flex-col">
+    <div className="flex min-h-screen flex-col overflow-x-hidden lg:h-screen lg:overflow-hidden">
       {/* ヘッダ */}
       <header className="z-10 bg-karatsu-800 px-4 py-3 text-white">
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -150,9 +150,9 @@ export default function App() {
         </div>
       </div>
 
-      {/* 本体: 地図 + 詳細 */}
-      <div className="relative flex min-h-0 flex-1 flex-col lg:flex-row">
-        <div className="relative min-h-0 flex-1">
+      {/* 本体: 地図 + 詳細(モバイルは地図が上・パネルが下) */}
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+        <div className="relative h-[46vh] shrink-0 lg:h-auto lg:min-h-0 lg:flex-1">
           <FlowMap
             data={areaData}
             maxValue={maxValue}
@@ -164,11 +164,11 @@ export default function App() {
         </div>
 
         {selectedAreaId ? (
-          <aside className="h-[55vh] shrink-0 border-t border-gray-200 bg-white lg:h-auto lg:w-[420px] lg:border-l lg:border-t-0">
+          <aside className="shrink-0 border-t border-gray-200 bg-white lg:h-auto lg:w-[420px] lg:overflow-y-auto lg:border-l lg:border-t-0">
             <AreaDetail data={data} areaId={selectedAreaId} onClose={() => setSelectedAreaId(null)} />
           </aside>
         ) : (
-          <aside className="hidden w-[420px] shrink-0 border-l border-gray-200 bg-white p-6 lg:block">
+          <aside className="shrink-0 border-t border-gray-200 bg-white p-4 lg:w-[420px] lg:overflow-y-auto lg:border-l lg:border-t-0 lg:p-6">
             <RankPanel areaData={areaData} ym={currentYm} onSelect={setSelectedAreaId} />
           </aside>
         )}
@@ -219,7 +219,11 @@ function Legend({
   areaData: { area: { id: string; name: string }; value: number | null }[];
 }) {
   return (
-    <div className="pointer-events-none absolute bottom-3 left-3 z-[1000] rounded-lg bg-white/90 p-3 text-xs shadow-md">
+    <div
+      className={`pointer-events-none absolute bottom-2 left-2 z-[1000] rounded-lg bg-white/90 p-2 text-[11px] shadow-md lg:bottom-3 lg:left-3 lg:p-3 lg:text-xs ${
+        metric === "value" ? "hidden lg:block" : ""
+      }`}
+    >
       <div className="mb-1 font-semibold text-gray-700">
         円の大きさ＝滞在人口
         {metric === "yoy" && " / 色＝前年同月比"}
@@ -275,14 +279,16 @@ function RankPanel({
           <li key={area.id}>
             <button
               onClick={() => onSelect(area.id)}
-              className="flex w-full items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-left hover:border-karatsu-400 hover:bg-karatsu-50"
+              className="grid w-full grid-cols-[1rem_0.75rem_minmax(0,1fr)_auto_2.75rem] items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-left hover:border-karatsu-400 hover:bg-karatsu-50"
             >
-              <span className="w-4 text-sm font-bold text-gray-400">{i + 1}</span>
-              <span className="inline-block h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: areaColor(area.id) }} />
-              <span className="min-w-0 flex-1 truncate text-sm">{area.name}</span>
-              <span className="tabular text-sm font-semibold text-gray-800">{formatNumber(value)}</span>
+              <span className="text-sm font-bold text-gray-400">{i + 1}</span>
+              <span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: areaColor(area.id) }} />
+              <span className="min-w-0 truncate text-sm">{area.name}</span>
+              <span className="tabular text-right text-sm font-semibold text-gray-800">
+                {formatNumber(value)}
+              </span>
               <span
-                className={`tabular w-12 text-right text-xs ${
+                className={`tabular text-right text-xs ${
                   yoy === null ? "text-gray-300" : yoy >= 1 ? "text-emerald-600" : "text-red-500"
                 }`}
               >
