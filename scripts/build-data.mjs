@@ -25,14 +25,14 @@ const SOURCE_URL = "https://www.city.karatsu.lg.jp/page/1039.html";
 //   - kitagawa    : 東城内(唐津城・中心市街地北側)
 //   - hamasaki-st : 浜崎駅
 //   - yobuko      : 呼子朝市通り
-//   - chinzei     : 名護屋城跡〜波戸岬の中間
+//   - chinzei     : 名護屋城博物館(名護屋城跡)。波戸岬も同エリアに含むが代表点は名護屋城
 const AREAS = [
   { id: "karatsu-st", name: "唐津駅周辺", lat: 33.4463, lng: 129.9678 },
   { id: "chuo-shoten", name: "中央商店街エリア", lat: 33.447, lng: 129.9698 },
   { id: "kitagawa", name: "中心市街地北側エリア", lat: 33.4528, lng: 129.977 },
   { id: "hamasaki-st", name: "浜崎駅周辺エリア", lat: 33.4468, lng: 130.0365 },
   { id: "yobuko", name: "呼子朝市エリア", lat: 33.537, lng: 129.8951 },
-  { id: "chinzei", name: "鎮西町名護屋・波戸エリア", lat: 33.5412, lng: 129.8613 },
+  { id: "chinzei", name: "鎮西町名護屋・波戸エリア", lat: 33.5277, lng: 129.8702 },
 ];
 
 function num(v) {
