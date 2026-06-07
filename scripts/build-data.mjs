@@ -18,14 +18,21 @@ const RAW = join(ROOT, "raw-data");
 
 const SOURCE_URL = "https://www.city.karatsu.lg.jp/page/1039.html";
 
-// 6エリアの定義。座標は各地区のおおよその中心(国土地理院ベースで微調整可)。
+// 6エリアの定義。座標は各エリアの代表地点を実測値で配置。
+// 出典: 駅・名所=OpenStreetMap(Nominatim) / 町丁=国土地理院ジオコーダ。
+//   - karatsu-st  : 唐津駅
+//   - chuo-shoten : 京町(中央商店街アーケード)
+//   - kitagawa    : 東城内(唐津城・中心市街地北側)
+//   - hamasaki-st : 浜崎駅
+//   - yobuko      : 呼子朝市通り
+//   - chinzei     : 名護屋城跡〜波戸岬の中間
 const AREAS = [
-  { id: "karatsu-st", name: "唐津駅周辺", lat: 33.4498, lng: 129.9689 },
-  { id: "chuo-shoten", name: "中央商店街エリア", lat: 33.4472, lng: 129.971 },
-  { id: "kitagawa", name: "中心市街地北側エリア", lat: 33.454, lng: 129.973 },
-  { id: "hamasaki-st", name: "浜崎駅周辺エリア", lat: 33.4757, lng: 130.0487 },
-  { id: "yobuko", name: "呼子朝市エリア", lat: 33.5436, lng: 129.8979 },
-  { id: "chinzei", name: "鎮西町名護屋・波戸エリア", lat: 33.534, lng: 129.862 },
+  { id: "karatsu-st", name: "唐津駅周辺", lat: 33.4463, lng: 129.9678 },
+  { id: "chuo-shoten", name: "中央商店街エリア", lat: 33.447, lng: 129.9698 },
+  { id: "kitagawa", name: "中心市街地北側エリア", lat: 33.4528, lng: 129.977 },
+  { id: "hamasaki-st", name: "浜崎駅周辺エリア", lat: 33.4468, lng: 130.0365 },
+  { id: "yobuko", name: "呼子朝市エリア", lat: 33.537, lng: 129.8951 },
+  { id: "chinzei", name: "鎮西町名護屋・波戸エリア", lat: 33.5412, lng: 129.8613 },
 ];
 
 function num(v) {
