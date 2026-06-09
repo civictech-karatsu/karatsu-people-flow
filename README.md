@@ -1,6 +1,6 @@
 # 唐津市 エリア別人流マップ
 
-🌐 **公開URL: https://karatsu-civictech.org/people-flow/**
+🌐 **公開URL: https://civictech-karatsu.org/people-flow/**
 
 唐津市が公開している**エリア別人流（滞在人口）データ**を、オープンソースの地図（国土地理院タイル）上に可視化し、月次推移・時間帯・属性・年代など多次元で見られる civic tech プロジェクトです。
 
@@ -27,7 +27,7 @@
 
 ## 公開構成
 
-`karatsu-civictech.org` はパス方式のマルチアプリ構成です。ハブのルーター Worker
+`civictech-karatsu.org` はパス方式のマルチアプリ構成です。ハブのルーター Worker
 （`karatsu-civictech/site` リポジトリ内 `worker/`）が `/people-flow/*` をこのプロジェクトの
 Pages（`karatsu-people-flow.pages.dev`）へ転送します。そのため `vite.config.ts` の
 `base: "/people-flow/"` でビルドします。
