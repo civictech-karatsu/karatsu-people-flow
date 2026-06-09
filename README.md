@@ -28,7 +28,7 @@
 ## 公開構成
 
 `civictech-karatsu.org` はパス方式のマルチアプリ構成です。ハブのルーター Worker
-（`karatsu-civictech/site` リポジトリ内 `worker/`）が `/people-flow/*` をこのプロジェクトの
+（`civictech-karatsu/site` リポジトリ内 `worker/`）が `/people-flow/*` をこのプロジェクトの
 Pages（`karatsu-people-flow.pages.dev`）へ転送します。そのため `vite.config.ts` の
 `base: "/people-flow/"` でビルドします。
 
